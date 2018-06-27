@@ -7,10 +7,12 @@
 		<title>Functional Programming</title>
 
 		<link rel="stylesheet" href="/node_modules/reveal.js/css/reveal.css">
-		<link rel="stylesheet" href="/node_modules/reveal.js/css/theme/night.css">
+		<link rel="stylesheet" href="/node_modules/reveal.js/css/theme/black.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="/node_modules/reveal.js/lib/css/zenburn.css">
+
+		<link rel="stylesheet" href="/src/custom.css">
 
 		<!-- Printing and PDF exports -->
 		<script>
@@ -56,6 +58,116 @@
 				</section>
 				<section>
 					<h3>What</h3>
+				</section>
+				<section>
+					<section>
+						<h3>First Class Functions</h3>
+						<p class="fragment slide-up text-small text-align-left">
+							<span class="text-emphasis">First Class: </span>type that can be argument or returned value of a function, and can be assigned to variables</p>
+						<p class="fragment slide-up text-small text-align-left">
+							<span class="text-emphasis">Second Class: </span>type that can be argument of a function, but can not be returned from a function or assigned to variables</p>
+						<p class="fragment slide-up text-small text-align-left">
+							<span class="text-emphasis">Third Class: </span>type that can not be parameter of a function</p>
+					</section>
+					<section>
+						<p class="text-emphasis">This means the language supports passing functions as arguments to other functions, returning them as the values from other functions, and assigning them to variables or storing them in data structures.</p>
+					</section>
+					<section>
+						<pre class="fragment slide-up">
+							<code data-trim data-noescape>
+								const hi = function (name) {
+									return 'Hi' + name
+								}
+
+								const greeting = function (name) {
+									return hi(name)
+								}
+							</code>
+						</pre>
+						<pre class="fragment slide-up">
+							<code data-trim data-noescape>
+								const hi = function (name) {
+									return 'Hi' + name
+								}
+								
+								const greeting = hi
+							</code>
+						</pre>
+					</section>
+					<section>
+						<pre>
+							<code data-trim data-noescape>
+								var BlogController = (function() {
+									var index = function(posts) {
+										return Views.index(posts);
+									};
+								
+									var show = function(post) {
+										return Views.show(post);
+									};
+								
+									var create = function(attrs) {
+										return Db.create(attrs);
+									};
+								
+									var update = function(post, attrs) {
+										return Db.update(post, attrs);
+									};
+								
+									var destroy = function(post) {
+										return Db.destroy(post);
+									};
+								
+									return {
+										index: index,
+										show: show,
+										create: create,
+										update: update,
+										destroy: destroy,
+									};
+								})();
+							</code>
+						</pre>
+					</section>
+					<section>
+						<pre>
+							<code data-trim data-noescape>
+								var BlogController = {
+									index: Views.index,
+									show: Views.show,
+									create: Db.create,
+									update: Db.update,
+									destroy: Db.destroy,
+								};
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3>Why First Class Functions</h3>
+						<p class="fragment slide-up">Reduce Redundant Code</p>
+						<p class="fragment slide-up">Easy to maintain</p>
+					</section>
+					<section>
+						<pre class="fragment slide-up">
+							<code data-trim data-noescape>
+								httpGet('/post/2', function(json) {
+									return renderPost(json);
+								});
+							</code>
+						</pre>
+						<pre class="fragment slide-up">
+							<code data-trim data-noescape>
+								httpGet('/post/2', function(json, err) {
+									return renderPost(json, err);
+								});
+							</code>
+						</pre>
+						<pre class="fragment slide-up">
+							<code data-trim data-noescape>
+								httpGet('/post/2', renderPost);
+							</code>
+						</pre>
+					</section>
 				</section>
 				<section>
 					<h3>Pure Function</h3>
