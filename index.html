@@ -170,7 +170,169 @@
 					</section>
 				</section>
 				<section>
-					<h3>Pure Function</h3>
+					<section>
+						<h3>Pure Function</h3>
+						<p class="fragment slide-up">
+							A pure function is a function that, given the same input, will always return the same output and does not have any observable side effect.
+						</p>
+					</section>
+					<section>
+						<pre>
+							<code data-trim data-noescape class="fragment slide-up">
+								var xs = [1, 2, 3, 4, 5];
+
+								// pure
+								xs.slice(0, 3);
+								//=> [1, 2, 3]
+								
+								xs.slice(0, 3);
+								//=> [1, 2, 3]
+								
+								xs.slice(0, 3);
+								//=> [1, 2, 3]
+							</code>
+							<code data-trim data-noescape class="fragment slide-up">
+								// impure
+								xs.splice(0, 3);
+								//=> [1, 2, 3]
+								
+								xs.splice(0, 3);
+								//=> [4, 5]
+								
+								xs.splice(0, 3);
+								//=> []
+							</code>
+						</pre>
+					</section>
+					<section>
+						<p class="text-emphasis fragment slide-up">
+							A side effect is a change of system state or observable interaction with the outside world that occurs during the calculation of a result.
+						</p>
+						<ul class="fragment slide-up">
+							<li>changing the file system</li>
+							<li>inserting a record into a database</li>
+							<li>making an http call</li>
+							<li>mutations</li>
+							<li>printing to the screen / logging</li>
+							<li>obtaining user input</li>
+							<li>querying the DOM</li>
+							<li>accessing system state</li>
+						</ul>
+					</section>
+					<section>
+						<pre>
+							<code data-trim data-noescape class="fragment slide-up">
+								const a = 4
+								function addWithA(number) {
+									return a + 4
+								}
+							</code>
+							<code data-trim data-noescape class="fragment slide-up">
+								function addWithB(number) {
+									const a = 4
+									return a + 4
+								}
+							</code>
+							<code data-trim data-noescape class="fragment slide-up">
+								function arrayWith(matchNumber, list) {
+									list = list.map((e) => e + matchNumber)
+									return list
+								}
+							</code>
+							<code data-trim data-noescape class="fragment slide-up">
+								function getFirstLager(compared, list) {
+									const value = list.find((e) => e > compared)
+									console.log(value)
+									return value
+								}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3>Why Pure Function</h3>
+					</section>
+					<section>
+						<pre>
+							<code data-trim data-noescape>
+								var squareNumber = memoize(function(x) {
+									return x * x;
+								});
+								
+								squareNumber(4);
+								//=> 16
+								squareNumber(4); // returns cache for input 4
+								//=> 16
+								
+								squareNumber(5);
+								//=> 25
+								squareNumber(5); // returns cache for input 5
+								//=> 25
+							</code>
+							<code data-trim data-noescape class="fragment slide-up">
+								var memoize = function(f) {
+									var cache = {};
+									return function() {
+										var arg_str = JSON.stringify(arguments);
+										cache[arg_str] = cache[arg_str] || f.apply(f, arguments);
+										return cache[arg_str];
+									};
+								};
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3>Why Pure Function</h3>
+						<ul>
+							<li class="fragment slide-up">Cacheable</li>
+						</ul>
+					</section>
+					<section>
+						<pre>
+							<code data-trim data-noescape>
+								//impure
+								var signUp = function(attrs) {
+									var user = saveUser(attrs);
+									welcomeUser(user);
+								};
+								var saveUser = function(attrs) {
+										var user = Db.save(attrs);
+										...
+								};
+								var welcomeUser = function(user) {
+										Email(user, ...);
+										...
+								};
+							</code>
+						</pre>
+					</section>
+					<section>
+						<pre>
+							<code data-trim data-noescape>
+								//pure
+								var signUp = function(Db, Email, attrs) {
+									return function() {
+										var user = saveUser(Db, attrs);
+										welcomeUser(Email, user);
+									};
+								};
+								var saveUser = function(Db, attrs) {
+										...
+								};
+								var welcomeUser = function(Email, user) {
+										...
+								};
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3>Why Pure Function</h3>
+						<ul>
+							<li class="fragment">Cacheable</li>
+							<li class="fragment slide-up">Portable / Self-Documenting</li>
+							<li class="fragment slide-up">Testable</li>
+							<li class="fragment slide-up">Parallel Code</li>
+						</ul>
+					</section>
 				</section>
 				<section>
 					<h3>Currying</h3>
