@@ -57,9 +57,6 @@
 					<h2>Functional Programming</h2>
 				</section>
 				<section>
-					<h2>What</h2>
-				</section>
-				<section>
 					<section>
 						<h3>First Class Functions</h3>
 						<p class="fragment slide-up text-small text-align-left">
@@ -382,19 +379,57 @@
 					</section>
 				</section>
 				<section>
-					<h2>Compose</h2>
 					<section>
-
+						<small>it's like pipeline</small>
+						<h2>Compose</h2>
+					</section>
+					<section>
+						<pre>
+							<code data-trim data-noescape class="fragment slide-up">
+								const names = ['Li Si', 'A Diao', 'Wang Mazi', 'Shenshen']
+							</code>
+							<code data-trim data-noescape class="fragment slide-up">
+								const sort = function (names) {...} // ['A Diao', 'Li Si', 'Shenshen', 'Wang Mazi']
+								const lastOne = function (names) {...} 'Wang Mazi'
+								const uppercase = function (name) {...} // 'WANG MAZI'
+								const youAreHandsome = function (name) {...} // 'WANG MAZI, you are handsome'
+							</code>
+							<code data-trim data-noescape class="fragment slide-up">
+								const result = youAreHandsome(uppercase(lastOne(sort(names))))
+							</code>
+							<code data-trim data-noescape class="fragment slide-up">
+								const sayHandsome = compose(youAreHandsome, uppercase, lastOne, sort)
+								const resultB = sayHandsome(names)
+							</code>
+						</pre>
+					</section>
+					<section>
+						<pre>
+							<code data-trim data-noescape>
+								const composeTwo = function (f, g) {
+									return function (x) {
+										return f(g(x))
+									}
+								}
+							</code>
+							<code data-trim data-noescape>
+								const compose = function (...funcs) {
+									if (funcs && funcs.length) {										
+										return function (x) {
+											let temp = x
+											funcs.reverse()
+											funcs.map(f => {
+												temp = f(temp)
+											})
+										}
+									}
+								}
+							</code>
+						</pre>
 					</section>
 				</section>
 				<section>
-					<h3>Why</h3>
-				</section>
-				<section>
-					<h3>How</h3>
-				</section>
-				<section>
-					<h3>Thank you</h3>
+					<h2>Thank you</h2>
 				</section>
 			</div>
 		</div>
