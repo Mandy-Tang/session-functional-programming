@@ -28,7 +28,7 @@
 			<div class="slides">
 				<section>
 					<section>
-						<h3>How Do We Coding?</h3>
+						<h2>How Do We Coding?</h2>
 					</section>
 					<section>
 						<pre>
@@ -57,7 +57,7 @@
 					<h2>Functional Programming</h2>
 				</section>
 				<section>
-					<h3>What</h3>
+					<h2>What</h2>
 				</section>
 				<section>
 					<section>
@@ -283,7 +283,7 @@
 					<section>
 						<h3>Why Pure Function</h3>
 						<ul>
-							<li class="fragment slide-up">Cacheable</li>
+							<li>Cacheable</li>
 						</ul>
 					</section>
 					<section>
@@ -327,15 +327,57 @@
 					<section>
 						<h3>Why Pure Function</h3>
 						<ul>
-							<li class="fragment">Cacheable</li>
-							<li class="fragment slide-up">Portable / Self-Documenting</li>
+							<li>Cacheable</li>
+							<li>Portable / Self-Documenting</li>
 							<li class="fragment slide-up">Testable</li>
 							<li class="fragment slide-up">Parallel Code</li>
 						</ul>
 					</section>
 				</section>
 				<section>
-					<h3>Currying</h3>
+					<small>can't live without</small>
+					<h2>Currying</h2>
+					<section>
+						<p class="text-emphasis">
+								You can call a function with fewer arguments than it expects. It returns a function that takes the remaining arguments.
+						</p>
+					</section>
+					<section>
+						<pre>
+							<code data-trim data-noescape>
+								const add = function (a, b) {
+									return a + b
+								}
+							</code>
+							<code data-trim data-noescape class="fragment slide-up">
+								const addTen = function (a) {
+									return a + 10
+								}
+							</code>
+							<code data-trim data-noescape class="fragment slide-up">
+								const addTenA = function (a) {
+									return add(10, a)
+								}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<pre>
+							<code data-trim data-noescape>
+								const add = function (a) {
+									return function (b) {
+										return a + b
+									}
+								}
+							</code>							
+							<code data-trim data-noescape class="fragment slide-up">
+								const addTen = add(10)
+								
+								const a = addTen(20) // 30
+								const b = addTen(30) // 40
+							</code>
+						</pre>
+					</section>
 				</section>
 				<section>
 					<h3>Compose</h3>
